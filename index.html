@@ -5,15 +5,43 @@
         <script type="text/javascript">
             class MyWebComponent extends HTMLElement {
                 connectedCallback() {
-                    console.log('Web component working');
-                    const oreclaLiveChat = document.createElement('script');
+                    this.initLiveChat();
                     const engagementEngineScript = document.createElement('script');
-                    oreclaLiveChat.type = engagementEngineScript.type = "text/javascript";
-                    oreclaLiveChat.src = "oracleLiveChat.js";
+                    engagementEngineScript.type = "text/javascript";
                     engagementEngineScript.src = "//ee.channels.ocs.oraclecloud.com/js/eesvcs.js";
-                    document.body.appendChild(script);
-                    document.body.appendChild(engagementEngineScript);
-                    console.log('Web component working');
+                    document.head.appendChild(engagementEngineScript);
+                }
+
+                initLiveChat() {
+                    // @ts-ignore
+                    window.EESvcs = { 'eeid': 201909115355710 };
+                    // @ts-ignore
+                    window.fireOracleChatEvent = this.fireOracleChatEvent.bind(window);
+                    // @ts-ignore
+                    window.checkOracleChatMinimized = this.checkOracleChatMinimized.bind(window);
+                    // @ts-ignore
+                    window.hideOracleChat = this.hideOracleChat.bind(window);
+                }
+
+
+                fireOracleChatEvent() {
+                    // @ts-ignore
+                    oit.fire(new oit.CustomEvent('inlay-oracle-chat-embedded-show', {
+                        detail: { id: 'inlay-oracle-chat-embedded' }
+                    }));
+                }
+
+                checkOracleChatMinimized() {
+                    const oracleChat = document.getElementById('inlay-oracle-chat-embedded');
+                    return oracleChat && oracleChat.getAttribute('data-oit-mode') === 'overlay-br-min';
+
+                }
+
+                hideOracleChat() {
+                    const elem = document.getElementById('inlay-oracle-chat-embedded');
+                    if (elem) {
+                        elem.setAttribute('data-oit-mode', 'hidden');
+                    }
                 }
             }
             window.customElements.define('my-test', MyWebComponent);
