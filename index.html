@@ -6,36 +6,10 @@
             class MyWebComponent extends HTMLElement {
                 connectedCallback() {
                     console.log('Web component working');
-                    const script = document.createElement('script');
+                    const oreclaLiveChat = document.createElement('script');
                     const engagementEngineScript = document.createElement('script');
-                    script.type = engagementEngineScript.type = "text/javascript";
-                    script.textContent = 
-                    `window.EESvcs = { 'eeid': 201909115355710 };
-                    function fireOracleChatEvent() {
-                        console.log("Calling fireChatEvent");
-                        oit.fire(new oit.CustomEvent('inlay-oracle-chat-embedded-show', {
-                            detail: { id: 'inlay-oracle-chat-embedded' }
-                        }));
-                    }
-
-                    function checkOracleChatMinimized() {
-                        try {
-                            if (document.getElementById('inlay-oracle-chat-embedded')) {
-                                const oracleChat = document.getElementById('inlay-oracle-chat-embedded');
-                                if (oracleChat.getAttribute('data-oit-mode') === 'overlay-br-min') {
-                                    return true;
-                                }
-                            }
-                        } catch (e) {}
-                        return false;
-                    }
-
-                    function hideOracleChat() {
-                        const elem = document.getElementById('inlay-oracle-chat-embedded');
-                        if (elem) {
-                            elem.setAttribute('data-oit-mode', 'hidden');
-                        }
-                    }`;
+                    oreclaLiveChat.type = engagementEngineScript.type = "text/javascript";
+                    oreclaLiveChat.src = "./oracleLiveChat.js";
                     engagementEngineScript.src = "//ee.channels.ocs.oraclecloud.com/js/eesvcs.js";
                     document.body.appendChild(script);
                     document.body.appendChild(engagementEngineScript);
