@@ -18,7 +18,7 @@
                     // @ts-ignore
                     window.fireOracleChatEvent = this.fireOracleChatEvent;
                     // @ts-ignore
-                    window.checkOracleChatMinimized = this.checkOracleChatStatusNotEmpty;
+                    window.checkOracleChatStatusNotEmpty = this.checkOracleChatStatusNotEmpty;
                     // @ts-ignore
                     window.hideOracleChat = this.hideOracleChat;
                 }
@@ -31,7 +31,7 @@
                     }));
                 }
 
-                checkOracleChatStatusNotEmpty() {
+                checkOracleChatStatusEmpty() {
                     const oracleChatStatus = localStorage.getItem('inlay-oracle-chat-embedded-chatStatus');
                     let oracleChatStatusJson;
                     try {
@@ -39,7 +39,7 @@
                     } catch (e) {
                         return false;
                     }
-                    return oracleChatStatusJson && Objects.keys(oracleChatStatusJson).length !== 0;
+                    return !oracleChatStatusJson || Object.keys(oracleChatStatusJson).length === 0;
                 }
 
                 hideOracleChat() {
