@@ -31,10 +31,15 @@
                     }));
                 }
 
-                checkOracleChatMinimized() {
-                    const oracleChat = document.getElementById('inlay-oracle-chat-embedded');
-                    return oracleChat && oracleChat.getAttribute('data-oit-mode') === 'overlay-br-min';
-
+                checkOracleChatStatusNotEmpty() {
+                    const oracleChatStatus = localStorage.getItem('inlay-oracle-chat-embedded-chatStatus');
+                    let oracleChatStatusJson;
+                    try {
+                        oracleChatStatusJson = JSON.parse(oracleChatStatus);
+                    } catch (e) {
+                        return false;
+                    }
+                    return oracleChatStatusJson && Objects.keys(oracleChatStatusJson).length !== 0;
                 }
 
                 hideOracleChat() {
